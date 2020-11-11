@@ -4,12 +4,16 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
 
 function Traininglist () {
     const [training, setTraining] = useState([]);
     const [open, setOpen] = useState(false);
     const gridRef = useRef();
     // const [message, setMessage] = useState('');
+    const [searchTraining, setSearchTraining] = useState('');
     useEffect(() => {
         getTraining();
     }, [])
@@ -33,13 +37,22 @@ function Traininglist () {
             .then(data => setTraining(data.content))
             .catch(err => console.log(err));
     }
-
+    const inputChanged = (event) => {
+        setSearchTraining({...searchTraining, [event.target.name]: event.target.value});
+      }
     const handleClose = (event, reason) => {
         setOpen(false);
       };
 
     return (
         <div>
+                <div>
+                <h3>Search Training</h3>
+                <Input name="searchTraining" type="text" onChange={inputChanged}></Input>
+                <IconButton aria-label="search">
+                <SearchIcon />
+                </IconButton>
+            </div>
             <div className="ag-theme-material" style={{height: '700px', width: '95%', margin: 'auto'}}>
                 <AgGridReact
                     ref={gridRef}

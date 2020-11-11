@@ -4,6 +4,9 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
 
 import Traininglist from './Traininglist';
 
@@ -11,8 +14,8 @@ function Customerlist () {
     const [customer, setCustomer] = useState([]);
     const [open, setOpen] = useState(false);
     const gridRef = useRef();
-    const [message, setMessage] = useState('');
-
+  //   const [message, setMessage] = useState('');
+    const [searchCustomer, setSearchCustomer] = useState('');
     useEffect(() => {
         getCustomers();
     }, [])
@@ -38,13 +41,22 @@ function Customerlist () {
             .then(data => setCustomer(data.content))
             .catch(err => console.log(err));
     }
-
+    const inputChanged = (event) => {
+        setSearchCustomer({...searchCustomer, [event.target.name]: event.target.value});
+      }
     const handleClose = (event, reason) => {
         setOpen(false);
       };
 
     return (
         <div>
+            <div>
+                <h3>Search Customer</h3>
+                <Input name="searchCustomer" type="text" onChange={inputChanged}></Input>
+                <IconButton aria-label="search">
+                <SearchIcon />
+                </IconButton>
+            </div>
             <div className="ag-theme-material" style={{height: '700px', width: '95%', margin: 'auto'}}>
                 <AgGridReact
                     ref={gridRef}
@@ -62,7 +74,7 @@ function Customerlist () {
                     open={open}
                     autoHideDuration={3000}
                     onClose={handleClose}
-                    message={message}
+            //        message={message}
                 ></Snackbar>
             </div>
         </div>
