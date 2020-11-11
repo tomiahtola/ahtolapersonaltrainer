@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
+import moment from 'moment'
 
 function Traininglist () {
     const [training, setTraining] = useState([]);
@@ -19,7 +20,14 @@ function Traininglist () {
     }, [])
 
     const columns = [
-        { headerName: 'Date', field: 'date', sortable:true, filter:true },
+        { headerName: 'Date',
+            field: 'date',
+            valueFormatter: function (params) {
+                return moment(params.value).utc().format('DD.MM.YYYY');
+            },
+            sortable:true,
+            filter:true
+        },
         { headerName: 'Duration', field: 'duration', sortable:true, filter:true },
         { headerName: 'Activity', field: 'activity', sortable:true, filter:true },
         { headerName: 'Customer', field: 'links.2.href', sortable:true, filter:true },
@@ -63,8 +71,10 @@ function Traininglist () {
                     columnDefs={columns}
                     suppressCellSelection={true}
                     rowData={training}
+                    resizable={true}
                     pagination={true}
                     paginationPageSize={10}>
+                      
                 </AgGridReact>
                 <Snackbar
                     open={open}

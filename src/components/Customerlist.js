@@ -67,6 +67,7 @@ function Customerlist () {
                     columnDefs={columns}
                     suppressCellSelection={true}
                     rowData={customer}
+                    resizable={true}
                     pagination={true}
                     paginationPageSize={10}>
                 </AgGridReact>
