@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-function AddTraining(props) {
+function EditTraining(props) {
     const [open, setOpen] = useState(false);
     const [training, setTraining] = useState({
         date: '',
@@ -16,15 +16,22 @@ function AddTraining(props) {
     });
 
     const handleClickOpen = () => {
-      setOpen(true);
+       console.log(props.params);
+        setTraining({
+            date: props.params.data.date,
+            activity: props.params.data.activity,
+            duration: props.params.data.duration,
+            customer: 'https://customerrest.herokuapp.com/api/trainings/'+ props.params.data.customer.id,
+        })
+        setOpen(true);
     };
   
     const handleClose = () => {
-      setOpen(false);
+        setOpen(false);
     };
 
     const handleSave = () => {
-        props.AddTraining(training)
+        props.EditTraining(training)
         handleClose();
     }
 
@@ -36,10 +43,10 @@ function AddTraining(props) {
     return(
         <div>
         <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-            Add
+            Edit
         </Button>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">New training</DialogTitle>
+            <DialogTitle id="form-dialog-title">Update training</DialogTitle>
             <DialogContent>
             <TextField
                 autoFocus
@@ -87,4 +94,4 @@ function AddTraining(props) {
         </div>
     )
 }
-export default AddTraining;
+export default EditTraining;

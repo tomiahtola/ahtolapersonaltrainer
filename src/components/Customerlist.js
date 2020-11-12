@@ -4,23 +4,31 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
-import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
+import FitnessCenterRoundedIcon from '@material-ui/icons/FitnessCenterRounded';
 
 import Traininglist from './Traininglist';
+import AddCustomer from './AddCustomer'
+import EditCustomer from './EditCustomer'
 
 function Customerlist () {
     const [customer, setCustomer] = useState([]);
     const [open, setOpen] = useState(false);
     const gridRef = useRef();
-  //   const [message, setMessage] = useState('');
-    const [searchCustomer, setSearchCustomer] = useState('');
+    const [message, setMessage] = useState('');
+
     useEffect(() => {
         getCustomers();
     }, [])
 
     const columns = [
+        { headerName: '',
+            field: 'links.rel.self.href',
+            cellRendererFramework: params =>
+            <IconButton color="secondary" size="small" onClick={() => Traininglist(params.value)}><FitnessCenterRoundedIcon />Add</IconButton>
+        },
+        { headerName: 'Test', field: '_links[2].href', sortable:true, filter:true },
+
         { headerName: 'First name', field: 'firstname', sortable:true, filter:true },
         { headerName: 'Last name', field: 'lastname', sortable:true, filter:true },
         { headerName: 'Street Address', field: 'streetaddress', sortable:true, filter:true },
@@ -28,11 +36,18 @@ function Customerlist () {
         { headerName: 'City', field: 'city', sortable:true, filter:true },
         { headerName: 'Email', field: 'email', sortable:true, filter:true },
         { headerName: 'Phone', field: 'phone', sortable:true, filter:true },
-        { headerName: 'Training',
-            field: 'links.rel.self.href',
-            cellRendererFramework: params =>
-            <Button color="secondary" size="small" onClick={() => Traininglist(params.value)}>Training</Button>
+        {
+            headerName: '',
+            field: 'links.rel.self.href', 
+            cellRendererFramework: params => <EditCustomer updateCustomer={updateCustomer} params={params}/>
         },
+        {
+            headerName: '',
+            field: '_links.self.href', 
+            cellRendererFramework: params =>
+            <Button color="secondary" size="small" onClick={() => deleteCustomer(params.value)}>Delete</Button>
+        },
+
     ]
 
     function getCustomers() {
@@ -41,9 +56,44 @@ function Customerlist () {
             .then(data => setCustomer(data.content))
             .catch(err => console.log(err));
     }
-    const inputChanged = (event) => {
-        setSearchCustomer({...searchCustomer, [event.target.name]: event.target.value});
-      }
+    const deleteCustomer = (link) => {
+        if(window.confirm('Are you sure you want to delete?')){
+            fetch(link, {
+                method: 'DELETE'
+            })
+            .then(_ => getCustomers())
+            .then(_ => setMessage('Customer deleted!'))
+            .then(_ => setOpen(true))
+            .catch(err => console.error(err))
+        }  
+    }
+
+    const addCustomer = (newCustomer) => {
+        fetch('https://carstockrest.herokuapp.com/cars', {
+            method: 'POST',
+            headers:{'Content-type' : 'application/json'},
+            body: JSON.stringify(newCustomer)
+        })
+        .then(_ => getCustomers())
+        .then(_ => setMessage('Customer added!'))
+        .then(_ => setOpen(true))
+        .catch(err => console.error(err))
+    }
+
+    const updateCustomer = (link, customer) => {
+        fetch(link, {
+            method: 'PUT',
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            body: JSON.stringify(customer)
+        })
+        .then(_ => getCustomers())
+        .then(_ => setMessage('Customer updated!'))
+        .then(_ => setOpen(true))
+        .catch(err => console.error(err))    
+    }
+
     const handleClose = (event, reason) => {
         setOpen(false);
       };
@@ -51,11 +101,7 @@ function Customerlist () {
     return (
         <div>
             <div>
-                <h3>Search Customer</h3>
-                <Input name="searchCustomer" type="text" onChange={inputChanged}></Input>
-                <IconButton aria-label="search">
-                <SearchIcon />
-                </IconButton>
+               <AddCustomer addCustomer={addCustomer}/>
             </div>
             <div className="ag-theme-material" style={{height: '700px', width: '95%', margin: 'auto'}}>
                 <AgGridReact
@@ -75,7 +121,7 @@ function Customerlist () {
                     open={open}
                     autoHideDuration={3000}
                     onClose={handleClose}
-            //        message={message}
+                    message={message}
                 ></Snackbar>
             </div>
         </div>

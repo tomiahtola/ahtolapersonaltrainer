@@ -15,6 +15,7 @@ import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
 import ContactsRoundedIcon from '@material-ui/icons/ContactsRounded';
 import FitnessCenterRoundedIcon from '@material-ui/icons/FitnessCenterRounded';
+import BarChartIcon from '@material-ui/icons/BarChart';
 
 import Home from './components/Home';
 import Customerlist from './components/Customerlist'
@@ -43,12 +44,14 @@ function App(props) {
     <Tab icon={<ContactsRoundedIcon />} value="two" label="Customers" />
     <Tab icon={<FitnessCenterRoundedIcon />} value="three" label="Training" />
     <Tab icon={<CalendarTodayRoundedIcon />} value="four" label="Calendar" />
+    <Tab icon={<BarChartIcon />} value="five" label="Statistics" />
     </Tabs>
       </AppBar>
       {value === 'one' && <div><Home /></div> }
       {value === 'two' && <div><Customerlist /></div> }
       {value === 'three' && <div><Traininglist /></div> }
-    {value === 'four' && <div>Calendar</div> }
+      {value === 'four' && <div>Calendar</div> }
+      {value === 'five' && <div>Statistics</div> }
     </div>
   );
 }

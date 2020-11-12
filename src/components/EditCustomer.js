@@ -6,12 +6,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-function AddCustomer(props) {
+function EditCustomer(props) {
     const [open, setOpen] = useState(false);
     const [customer, setCustomer] = useState({
         firstname: '',
         lastname: '',
-        address: '',
+        streetaddress: '',
         postcode: '',
         city: '',
         email: '',
@@ -19,6 +19,15 @@ function AddCustomer(props) {
     });
 
     const handleClickOpen = () => {
+        setCustomer({
+            firstname: props.params.data.firstname,
+            lastname: props.params.data.lastname,
+            streetaddress: props.params.data.streetaddress,
+            postcode: props.params.data.postcode,
+            city: props.params.data.city,
+            email: props.params.data.email,
+            phone: props.params.data.phone,
+        })
       setOpen(true);
     };
   
@@ -27,7 +36,7 @@ function AddCustomer(props) {
     };
 
     const handleSave = () => {
-        props.AddCustomer(customer)
+        props.updateCustomer(props.params.value, customer)
         handleClose();
     }
 
@@ -38,11 +47,11 @@ function AddCustomer(props) {
 
     return(
         <div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-            Add Customer
+        <Button color="primary" onClick={handleClickOpen}>
+            Edit
         </Button>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">New Customer</DialogTitle>
+            <DialogTitle id="form-dialog-title">Update Customer</DialogTitle>
             <DialogContent>
             <TextField
                 autoFocus
@@ -114,4 +123,4 @@ function AddCustomer(props) {
         </div>
     )
 }
-export default AddCustomer;
+export default EditCustomer;
