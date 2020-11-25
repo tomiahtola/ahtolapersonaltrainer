@@ -38,7 +38,7 @@ function AddTraining(props) {
 
     return(
         <div>
-        <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
+        <IconButton onClick={handleClickOpen}>
         <FitnessCenterRoundedIcon/>
         </IconButton>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
