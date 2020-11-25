@@ -6,6 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import moment from 'moment'
+import IconButton from '@material-ui/core/IconButton';
+import FitnessCenterRoundedIcon from '@material-ui/icons/FitnessCenterRounded';
 
 function AddTraining(props) {
     const [open, setOpen] = useState(false);
@@ -36,9 +38,9 @@ function AddTraining(props) {
 
     return(
         <div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-            Add
-        </Button>
+        <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
+        <FitnessCenterRoundedIcon/>
+        </IconButton>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">New training</DialogTitle>
             <DialogContent>

@@ -4,10 +4,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import FitnessCenterRoundedIcon from '@material-ui/icons/FitnessCenterRounded';
 
-import Traininglist from './Traininglist';
 import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
 import AddTraining from './AddTraining';
@@ -23,7 +20,7 @@ function Customerlist () {
     }, [])
 
     const columns = [
-        { headerName: '',
+        { headerName: 'Add Training',
             field: 'links.2.href',
             cellRendererFramework: params => <AddTraining addTraining={addTraining} params={params}/>
         },
@@ -77,7 +74,7 @@ function Customerlist () {
         .then(_ => setOpen(true))
         .catch(err => console.error(err))
     }
-    
+
     const addTraining = (newTraining) => {
         fetch('https://customerrest.herokuapp.com/api/trainings', {
             method: 'POST',
