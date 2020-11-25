@@ -27,7 +27,7 @@ function AddCustomer(props) {
     };
 
     const handleSave = () => {
-        props.AddCustomer(customer)
+        props.addCustomer(customer)
         handleClose();
     }
 
@@ -62,11 +62,11 @@ function AddCustomer(props) {
                 fullWidth
             />
             <TextField
-                name="address"
+                name="streetaddress"
                 value={customer.streetaddress}
                 onChange={inputChanged}
                 margin="dense"
-                label="streetaddress"
+                label="street address"
                 fullWidth
             />
             <TextField

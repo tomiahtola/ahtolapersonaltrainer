@@ -71,7 +71,7 @@ function EditCustomer(props) {
                 fullWidth
             />
             <TextField
-                name="address"
+                name="streetaddress"
                 value={customer.streetaddress}
                 onChange={inputChanged}
                 margin="dense"

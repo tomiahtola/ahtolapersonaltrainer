@@ -37,12 +37,12 @@ function Traininglist () {
         },
         {
             headerName: '',
-            field: 'links.rel.self.href', 
+            field: 'id', 
             cellRendererFramework: params =><EditTraining updateTraining={updateTraining} params={params}/>
         },
         {
             headerName: '',
-            field: 'params.id', 
+            field: 'id', 
             cellRendererFramework: params =>
             <Button color="secondary" size="small" onClick={() => deleteTraining(params.value)}>Delete</Button>
         },
@@ -55,7 +55,10 @@ function Traininglist () {
             .catch(err => console.log(err));
     }
 
-    const deleteTraining = (link) => {
+    const deleteTraining = (id) => {
+        
+        let link ="https://customerrest.herokuapp.com/api/trainings/"+id;
+        console.log(link)
         if(window.confirm('Are you sure you want to delete?')){
             fetch(link, {
                 method: 'DELETE'
@@ -66,7 +69,8 @@ function Traininglist () {
             .catch(err => console.error(err))
         }  
     }
-    const updateTraining = (link, training) => {
+    const updateTraining = (id, training) => {
+        let link ="https://customerrest.herokuapp.com/api/trainings/"+id;
         fetch(link, {
             method: 'PUT',
             headers: {

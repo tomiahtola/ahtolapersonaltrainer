@@ -31,7 +31,7 @@ function EditTraining(props) {
     };
 
     const handleSave = () => {
-        props.EditTraining(training)
+        props.updateTraining(props.params.value, training)
         handleClose();
     }
 

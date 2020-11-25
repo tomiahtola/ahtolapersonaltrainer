@@ -8,8 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import FitnessCenterRoundedIcon from '@material-ui/icons/FitnessCenterRounded';
 
 import Traininglist from './Traininglist';
-import AddCustomer from './AddCustomer'
-import EditCustomer from './EditCustomer'
+import AddCustomer from './AddCustomer';
+import EditCustomer from './EditCustomer';
+import AddTraining from './AddTraining';
 
 function Customerlist () {
     const [customer, setCustomer] = useState([]);
@@ -23,12 +24,9 @@ function Customerlist () {
 
     const columns = [
         { headerName: '',
-            field: 'links.rel.self.href',
-            cellRendererFramework: params =>
-            <IconButton color="secondary" size="small" onClick={() => Traininglist(params.value)}><FitnessCenterRoundedIcon />Add</IconButton>
+            field: 'links.2.href',
+            cellRendererFramework: params => <AddTraining addTraining={addTraining} params={params}/>
         },
-        { headerName: 'Test', field: '_links[2].href', sortable:true, filter:true },
-
         { headerName: 'First name', field: 'firstname', sortable:true, filter:true },
         { headerName: 'Last name', field: 'lastname', sortable:true, filter:true },
         { headerName: 'Street Address', field: 'streetaddress', sortable:true, filter:true },
@@ -38,12 +36,12 @@ function Customerlist () {
         { headerName: 'Phone', field: 'phone', sortable:true, filter:true },
         {
             headerName: '',
-            field: 'links.rel.self.href', 
+            field: 'links.0.href', 
             cellRendererFramework: params => <EditCustomer updateCustomer={updateCustomer} params={params}/>
         },
         {
             headerName: '',
-            field: '_links.self.href', 
+            field: 'links.0.href', 
             cellRendererFramework: params =>
             <Button color="secondary" size="small" onClick={() => deleteCustomer(params.value)}>Delete</Button>
         },
@@ -69,7 +67,7 @@ function Customerlist () {
     }
 
     const addCustomer = (newCustomer) => {
-        fetch('https://carstockrest.herokuapp.com/cars', {
+        fetch('https://customerrest.herokuapp.com/api/customers', {
             method: 'POST',
             headers:{'Content-type' : 'application/json'},
             body: JSON.stringify(newCustomer)
@@ -79,7 +77,17 @@ function Customerlist () {
         .then(_ => setOpen(true))
         .catch(err => console.error(err))
     }
-
+    
+    const addTraining = (newTraining) => {
+        fetch('https://customerrest.herokuapp.com/api/trainings', {
+            method: 'POST',
+            headers:{'Content-type' : 'application/json'},
+            body: JSON.stringify(newTraining)
+        })
+        .then(_ => setMessage('Training added!'))
+        .then(_ => setOpen(true))
+        .catch(err => console.error(err))
+    }
     const updateCustomer = (link, customer) => {
         fetch(link, {
             method: 'PUT',
@@ -93,7 +101,7 @@ function Customerlist () {
         .then(_ => setOpen(true))
         .catch(err => console.error(err))    
     }
-
+    
     const handleClose = (event, reason) => {
         setOpen(false);
       };
