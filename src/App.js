@@ -20,7 +20,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import Home from './components/Home';
 import Customerlist from './components/Customerlist'
 import Traininglist from './components/Traininglist'
-import Calendar from './components/Calendar'
+import MyCalendar from './components/MyCalendar'
 import Statistics from './components/Statistics'
 
 function App(props) {
@@ -52,7 +52,7 @@ function App(props) {
       {value === 'one' && <div><Home /></div> }
       {value === 'two' && <div><Customerlist /></div> }
       {value === 'three' && <div><Traininglist /></div> }
-      {value === 'four' && <div><Calendar /></div> }
+      {value === 'four' && <div><MyCalendar /></div> }
       {value === 'five' && <div><Statistics /></div> }
     </div>
   );

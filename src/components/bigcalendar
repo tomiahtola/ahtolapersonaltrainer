@@ -1,0 +1,17 @@
+/* const loadTrainings = () => {
+    fetch('https://customerrest.herokuapp.com/gettrainings')
+        .then(response => response.json())
+        .then(trainings => {
+            
+            return setCalEvents(
+                trainings.map((training, index) => ({
+                    
+                    id: index,
+                    title: training.activity + " / " + training.customer.firstname + " " + training.customer.lastname,
+                    end: moment.utc(training.date).add(trainings.duration, 'minutes')._d,
+                    start: moment.utc(training.date)._d
+                }​​))
+            )
+        }​​)
+        .catch(err => console.error(err))
+}​​ */

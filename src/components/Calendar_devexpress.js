@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+/* import React, { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -13,24 +13,31 @@ import {
 import moment from 'moment'
 
 function Calendar() {
-    const currentDate = moment().toISOString();
+    const currentDate = moment();
     const views = ['week','day','month'];
+    const [appointments, setAppointments] = useState([]);
     const [training, setTraining] = useState([]);
-
-    function getTraining() {
+    
+    const getTrainings = () => {
         fetch('https://customerrest.herokuapp.com/gettrainings')
             .then(response => response.json())
             .then(data => setTraining(data))
+            .then(data => {
+                return setAppointments(
+                    data.map((training, index) => ({
+                        id: index,
+                        title: training.activity + " / " + training.customer.firstname + " " + training.customer.lastname,
+                        end: moment.utc(training.date).add(data.duration, 'minutes')._d,
+                        start: moment.utc(training.date)._d
+                }))
+
+                )
+
+            })
             .catch(err => console.log(err));
     }
 
-    useEffect(() => {
-        getTraining();
-        
-    }, [])
-
-    console.log(training)
-
+console.log(training)
     return (
         <Paper>
         <Scheduler
@@ -44,6 +51,7 @@ function Calendar() {
             startDayHour={8}
             endDayHour={18}
         >
+           
             <ViewState />
             <WeekView
                 startDayHour={8}
@@ -53,8 +61,10 @@ function Calendar() {
             <MonthView />
             <Toolbar />
             <ViewSwitcher />
+            <Appointments getTrainings={getTrainings}/>
         </Scheduler>
       </Paper>
     )
 }
 export default Calendar;
+ */
