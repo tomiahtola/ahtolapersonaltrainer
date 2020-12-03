@@ -28,7 +28,7 @@ function MyCalendar() {
             })
             .catch(err => console.log(err));
     }
-    console.log(calEvents)
+    
     return (
         <Calendar
         events={calEvents}
