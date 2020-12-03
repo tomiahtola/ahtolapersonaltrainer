@@ -35,7 +35,7 @@ function AddTraining(props) {
         event.preventDefault();
         setTraining({...training, [event.target.name]: event.target.value})
     }
-
+    console.log("test")
     return(
         <div>
         <IconButton onClick={handleClickOpen}>
